@@ -1,9 +1,13 @@
-/* Myca Collective color palette */
+/* Myca Collective color palette (from Tailwind config) */
 :root {
-  --green: #1A3A2A;
-  --cream: #E8D9BE;
-  --light-cream: #F7F3ED;
-  --green-light: #2A5A40;
+  --forest-900: #1B3024;
+  --forest-700: #2D4A37;
+  --forest-400: #6A9477;
+  --cream: #F5EDDA;
+  --ivory: #FAF7F0;
+  --ink-800: #1C1917;
+  --ink-500: #57534E;
+  --ink-200: #D6D3D1;
 }
 
 /* Reset */
@@ -15,8 +19,8 @@
 
 body {
   font-family: Georgia, 'Times New Roman', serif;
-  background-color: var(--light-cream);
-  color: var(--green);
+  background-color: var(--ivory);
+  color: var(--ink-800);
   line-height: 1.7;
   min-height: 100vh;
   display: flex;
@@ -26,7 +30,7 @@ body {
 /* Header */
 header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--cream);
+  border-bottom: 1px solid var(--ink-200);
 }
 
 .header-inner {
@@ -40,7 +44,7 @@ header {
 .logo {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--green);
+  color: var(--forest-900);
   text-decoration: none;
   letter-spacing: 0.01em;
 }
@@ -52,7 +56,7 @@ nav {
 }
 
 nav a {
-  color: var(--green);
+  color: var(--forest-900);
   text-decoration: none;
   font-size: 0.95rem;
   transition: opacity 0.2s;
@@ -80,13 +84,13 @@ main {
   font-weight: 700;
   margin-bottom: 2rem;
   line-height: 1.3;
-  color: var(--green);
+  color: var(--forest-900);
 }
 
 .content p {
   font-size: 1.05rem;
   margin-bottom: 1.25rem;
-  color: var(--green);
+  color: var(--ink-800);
 }
 
 .content ul {
@@ -99,15 +103,15 @@ main {
 }
 
 .content a {
-  color: var(--green);
-  text-decoration-color: var(--cream);
+  color: var(--forest-900);
+  text-decoration-color: var(--forest-400);
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
   transition: text-decoration-color 0.2s;
 }
 
 .content a:hover {
-  text-decoration-color: var(--green);
+  text-decoration-color: var(--forest-900);
 }
 
 /* Footer */
@@ -115,9 +119,8 @@ footer {
   padding: 2rem;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--green);
-  opacity: 0.6;
-  border-top: 1px solid var(--cream);
+  color: var(--ink-500);
+  border-top: 1px solid var(--ink-200);
 }
 
 /* Responsive */
