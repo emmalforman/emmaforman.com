@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Emma Forman</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">Emma Forman</a>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/contact.html">Contact</a>
+        <a href="https://www.linkedin.com/in/emmalforman/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Member Admin</h1>
+    </section>
+
+    <section class="content">
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="pending">Pending</button>
+        <button class="admin-tab" data-tab="approved">Approved</button>
+        <button class="admin-tab" data-tab="rejected">Rejected</button>
+      </div>
+
+      <div id="pending" class="admin-panel active">
+        <p class="admin-empty" id="pending-empty" style="display:none;">No pending members.</p>
+        <div id="pending-list" class="member-list"></div>
+      </div>
+
+      <div id="approved" class="admin-panel">
+        <p class="admin-empty" id="approved-empty" style="display:none;">No approved members yet.</p>
+        <div id="approved-list" class="member-list"></div>
+      </div>
+
+      <div id="rejected" class="admin-panel">
+        <p class="admin-empty" id="rejected-empty" style="display:none;">No rejected members.</p>
+        <div id="rejected-list" class="member-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Emma Forman</p>
+  </footer>
+
+  <script>
+    var STORAGE_KEY = 'myca_members';
+
+    var defaultMembers = [
+      { id: 1, name: 'Sarah Chen', email: 'sarah@example.com', date: '2026-04-10', status: 'pending' },
+      { id: 2, name: 'Priya Patel', email: 'priya@example.com', date: '2026-04-11', status: 'pending' },
+      { id: 3, name: 'Maria Gonzalez', email: 'maria@example.com', date: '2026-04-12', status: 'pending' },
+    ];
+
+    function loadMembers() {
+      var stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : defaultMembers;
+    }
+
+    function saveMembers(members) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(members));
+    }
+
+    function setStatus(id, newStatus) {
+      var members = loadMembers();
+      for (var i = 0; i < members.length; i++) {
+        if (members[i].id === id) {
+          members[i].status = newStatus;
+          break;
+        }
+      }
+      saveMembers(members);
+      render();
+    }
+
+    function renderCard(member, showActions) {
+      var card = document.createElement('div');
+      card.className = 'member-card';
+
+      var info = document.createElement('div');
+      info.className = 'member-info';
+      info.innerHTML =
+        '<strong>' + member.name + '</strong>' +
+        '<span class="member-email">' + member.email + '</span>' +
+        '<span class="member-date">Applied ' + member.date + '</span>';
+      card.appendChild(info);
+
+      var actions = document.createElement('div');
+      actions.className = 'member-actions';
+
+      if (showActions === 'pending') {
+        var approveBtn = document.createElement('button');
+        approveBtn.className = 'btn btn-approve';
+        approveBtn.textContent = 'Approve';
+        approveBtn.onclick = function () { setStatus(member.id, 'approved'); };
+
+        var rejectBtn = document.createElement('button');
+        rejectBtn.className = 'btn btn-reject';
+        rejectBtn.textContent = 'Reject';
+        rejectBtn.onclick = function () { setStatus(member.id, 'rejected'); };
+
+        actions.appendChild(approveBtn);
+        actions.appendChild(rejectBtn);
+      } else {
+        var undoBtn = document.createElement('button');
+        undoBtn.className = 'btn btn-undo';
+        undoBtn.textContent = 'Move to Pending';
+        undoBtn.onclick = function () { setStatus(member.id, 'pending'); };
+        actions.appendChild(undoBtn);
+      }
+
+      card.appendChild(actions);
+      return card;
+    }
+
+    function render() {
+      var members = loadMembers();
+      var pending = members.filter(function (m) { return m.status === 'pending'; });
+      var approved = members.filter(function (m) { return m.status === 'approved'; });
+      var rejected = members.filter(function (m) { return m.status === 'rejected'; });
+
+      var pendingList = document.getElementById('pending-list');
+      var approvedList = document.getElementById('approved-list');
+      var rejectedList = document.getElementById('rejected-list');
+
+      pendingList.innerHTML = '';
+      approvedList.innerHTML = '';
+      rejectedList.innerHTML = '';
+
+      pending.forEach(function (m) { pendingList.appendChild(renderCard(m, 'pending')); });
+      approved.forEach(function (m) { approvedList.appendChild(renderCard(m, 'approved')); });
+      rejected.forEach(function (m) { rejectedList.appendChild(renderCard(m, 'rejected')); });
+
+      document.getElementById('pending-empty').style.display = pending.length === 0 ? 'block' : 'none';
+      document.getElementById('approved-empty').style.display = approved.length === 0 ? 'block' : 'none';
+      document.getElementById('rejected-empty').style.display = rejected.length === 0 ? 'block' : 'none';
+
+      // Update tab counts
+      document.querySelector('[data-tab="pending"]').textContent = 'Pending (' + pending.length + ')';
+      document.querySelector('[data-tab="approved"]').textContent = 'Approved (' + approved.length + ')';
+      document.querySelector('[data-tab="rejected"]').textContent = 'Rejected (' + rejected.length + ')';
+    }
+
+    // Tab switching
+    document.querySelectorAll('.admin-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.admin-tab').forEach(function (t) { t.classList.remove('active'); });
+        document.querySelectorAll('.admin-panel').forEach(function (p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
