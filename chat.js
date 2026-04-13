@@ -1,73 +1,9 @@
 (function () {
-  var AUTH_KEY = 'myca_member';
-
-  // Elements
-  var signInBtn = document.getElementById('sign-in-btn');
-  var loginModal = document.getElementById('login-modal');
-  var loginForm = document.getElementById('login-form');
-  var modalClose = document.getElementById('modal-close');
-  var heroHeading = document.getElementById('hero-heading');
-  var mycaChat = document.getElementById('myca-chat');
   var chatForm = document.getElementById('chat-form');
   var chatInput = document.getElementById('chat-input');
   var suggestions = document.getElementById('chat-suggestions');
   var responseArea = document.getElementById('ask-response');
 
-  function getMember() {
-    try { return JSON.parse(localStorage.getItem(AUTH_KEY)); } catch (e) { return null; }
-  }
-
-  function isLoggedIn() {
-    return getMember() !== null;
-  }
-
-  // Update page based on auth state
-  function updateUI() {
-    if (isLoggedIn()) {
-      var member = getMember();
-      signInBtn.textContent = 'Sign Out';
-      heroHeading.textContent = 'Welcome back, ' + member.name;
-      mycaChat.hidden = false;
-    } else {
-      signInBtn.textContent = 'Sign In';
-      heroHeading.innerHTML = 'Welcome &mdash; I\u2019m Emma Forman';
-      mycaChat.hidden = true;
-      responseArea.hidden = true;
-      suggestions.hidden = false;
-    }
-  }
-
-  // Sign in / sign out
-  signInBtn.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (isLoggedIn()) {
-      localStorage.removeItem(AUTH_KEY);
-      updateUI();
-    } else {
-      loginModal.hidden = false;
-      document.getElementById('login-email').focus();
-    }
-  });
-
-  // Close modal
-  modalClose.addEventListener('click', function () { loginModal.hidden = true; });
-  loginModal.addEventListener('click', function (e) {
-    if (e.target === loginModal) loginModal.hidden = true;
-  });
-
-  // Login
-  loginForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = document.getElementById('login-email').value;
-    var name = email.split('@')[0];
-    name = name.charAt(0).toUpperCase() + name.slice(1);
-    localStorage.setItem(AUTH_KEY, JSON.stringify({ email: email, name: name }));
-    loginModal.hidden = true;
-    loginForm.reset();
-    updateUI();
-  });
-
-  // Simple response lookup
   var responses = [
     { keys: ['event', 'upcoming', 'happening', 'next'], answer: 'Our next FoodHack NYC meetup is coming up soon! Check mycacollective.com for the latest schedule, and keep an eye on our newsletter for member-only dinners and workshops.' },
     { keys: ['involved', 'join', 'contribute', 'help', 'volunteer'], answer: 'We\u2019d love to have you more involved! You can attend our events, contribute to community discussions, or reach out about hosting a gathering. Start by visiting mycacollective.com or contacting Emma directly.' },
@@ -90,7 +26,6 @@
     return 'Great question! That\u2019s something our community is actively exploring. Check out mycacollective.com for more, or come to one of our upcoming events to dive deeper.';
   }
 
-  // Submit a question
   function ask(text) {
     if (!text.trim()) return;
     chatInput.value = '';
@@ -104,13 +39,9 @@
     ask(chatInput.value);
   });
 
-  // Suggestion chips
   suggestions.querySelectorAll('button').forEach(function (btn) {
     btn.addEventListener('click', function () {
       ask(btn.textContent);
     });
   });
-
-  // Init
-  updateUI();
 })();
