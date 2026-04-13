@@ -27,11 +27,9 @@
       var member = getMember();
       signInBtn.textContent = 'Sign Out';
       heroHeading.textContent = 'Welcome back, ' + member.name;
-      mycaChat.hidden = false;
     } else {
       signInBtn.textContent = 'Sign In';
       heroHeading.innerHTML = 'Welcome &mdash; I\u2019m Emma Forman';
-      mycaChat.hidden = true;
       responseArea.hidden = true;
       suggestions.hidden = false;
     }
@@ -90,9 +88,14 @@
     return 'Great question! That\u2019s something our community is actively exploring. Check out mycacollective.com for more, or come to one of our upcoming events to dive deeper.';
   }
 
-  // Submit a question
+  // Submit a question — prompt sign-in if not logged in
   function ask(text) {
     if (!text.trim()) return;
+    if (!isLoggedIn()) {
+      loginModal.hidden = false;
+      document.getElementById('login-email').focus();
+      return;
+    }
     chatInput.value = '';
     suggestions.hidden = true;
     responseArea.hidden = false;
