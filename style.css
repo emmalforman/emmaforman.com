@@ -123,6 +123,222 @@ footer {
   border-top: 1px solid var(--ink-200);
 }
 
+/* Auth nav link */
+.nav-auth {
+  background: var(--forest-900);
+  color: var(--ivory) !important;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s;
+}
+
+.nav-auth:hover {
+  opacity: 0.85;
+}
+
+/* Login modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(27, 48, 36, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--ivory);
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 380px;
+  margin: 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--ink-500);
+  cursor: pointer;
+}
+
+.modal-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--forest-900);
+  color: var(--ivory);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.modal h2 {
+  font-size: 1.25rem;
+  color: var(--forest-900);
+  margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+  font-size: 0.9rem;
+  color: var(--ink-500);
+  margin-bottom: 1.5rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--ink-200);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.modal input:focus {
+  outline: none;
+  border-color: var(--forest-400);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.65rem;
+  background: var(--forest-900);
+  color: var(--ivory);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Ask Myca — minimal ask box */
+.myca-ask {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.ask-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.ask-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--forest-900);
+  color: var(--ivory);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.ask-header h2 {
+  font-size: 1.15rem;
+  color: var(--forest-900);
+  font-weight: 700;
+}
+
+.ask-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.ask-form input {
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ink-200);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.ask-form input:focus {
+  outline: none;
+  border-color: var(--forest-400);
+}
+
+.ask-form button {
+  background: var(--forest-900);
+  color: var(--ivory);
+  border: none;
+  border-radius: 8px;
+  padding: 0 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+
+.ask-form button:hover {
+  opacity: 0.85;
+}
+
+.ask-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.ask-suggestions button {
+  background: none;
+  border: 1px solid var(--forest-400);
+  color: var(--forest-700);
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ask-suggestions button:hover {
+  background: var(--forest-900);
+  color: var(--ivory);
+  border-color: var(--forest-900);
+}
+
+.ask-response {
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-800);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   main {
@@ -135,5 +351,13 @@ footer {
 
   header {
     padding: 1.25rem 1.25rem;
+  }
+
+  .myca-ask {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .ask-suggestions button {
+    font-size: 0.75rem;
   }
 }
